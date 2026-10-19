@@ -1,0 +1,72 @@
+{
+  "owner": {
+    "owner_name": "Jordan",
+    "timezone": "UTC",
+    "daily_available_minutes": 83,
+    "preferred_task_times": [
+      "morning"
+    ],
+    "hard_constraints": []
+  },
+  "pets": [
+    {
+      "pet_name": "Mochi",
+      "species": "cat",
+      "breed": "",
+      "age": 0,
+      "energy_level": "medium",
+      "medical_notes": "",
+      "routine_defaults": []
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "task_1",
+      "pet_name": "Mochi",
+      "task_type": "walk",
+      "duration_minutes": 20,
+      "priority": 5,
+      "due_window": "morning",
+      "recurrence": "daily",
+      "status": "pending",
+      "scheduled_weekday": null,
+      "scheduled_time": ""
+    },
+    {
+      "task_id": "task_2",
+      "pet_name": "Mochi",
+      "task_type": "walk",
+      "duration_minutes": 20,
+      "priority": 5,
+      "due_window": "morning",
+      "recurrence": "daily",
+      "status": "pending",
+      "scheduled_weekday": null,
+      "scheduled_time": ""
+    },
+    {
+      "task_id": "task_3",
+      "pet_name": "Mochi",
+      "task_type": "walk",
+      "duration_minutes": 20,
+      "priority": 5,
+      "due_window": "morning",
+      "recurrence": "daily",
+      "status": "pending",
+      "scheduled_weekday": null,
+      "scheduled_time": ""
+    },
+    {
+      "task_id": "task_4",
+      "pet_name": "Mochi",
+      "task_type": "walk",
+      "duration_minutes": 20,
+      "priority": 5,
+      "due_window": "morning",
+      "recurrence": "daily",
+      "status": "pending",
+      "scheduled_weekday": null,
+      "scheduled_time": "6:20"
+    }
+  ]
+}

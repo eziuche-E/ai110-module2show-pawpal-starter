@@ -1,15 +1,80 @@
 classDiagram
-    %% Replace the placeholders below with your actual classes, attributes, methods, and relationships.
-    %% Keep this file updated so it matches your final implementation.
-
-    class ClassName {
-        +type attribute
-        +method() returnType
+    class OwnerProfile {
+        +owner_name: str
+        +timezone: str
+        +daily_available_minutes: int
+        +preferred_task_times: List[str]
+        +hard_constraints: List[str]
+        +update_profile(owner_name: str|None, timezone: str|None)
+        +set_time_budget(minutes: int)
+        +set_preferences(preferences: List[str])
+        +save_to_json(pets, tasks, file_path)
+        +load_from_json(file_path)
     }
 
-    class AnotherClass {
-        +type attribute
-        +method() returnType
+    class PetProfile {
+        +pet_name: str
+        +species: str
+        +breed: str
+        +age: int
+        +energy_level: str
+        +medical_notes: str
+        +routine_defaults: List[str]
+        +update_pet_info(pet_name: str|None, species: str|None)
+        +get_care_needs() List[str]
+        +flag_special_requirements() List[str]
     }
 
-    ClassName --> AnotherClass : relationship
+    class CareTask {
+        +task_id: str
+        +pet_name: str
+        +task_type: str
+        +duration_minutes: int
+        +priority: int
+        +due_window: str
+        +recurrence: str
+        +status: str
+        +scheduled_weekday: int|None
+        +scheduled_time: str
+        +edit_task(**updates)
+        +mark_complete()
+        +mark_skipped()
+        +priority_level() str
+        +is_due_today(weekday: int|None) bool
+    }
+
+    class Scheduler {
+        +scheduling_rules: List[str]
+        +priority_weights: Dict[str, int]
+        +constraint_settings: List[str]
+        +generate_plan(owner, pet, tasks, weekday)
+        +assign_next_available_slots(tasks)
+        +resolve_conflicts(tasks)
+        +detect_time_conflicts(tasks)
+        +sort_by_time(tasks)
+        +sort_by_priority_then_time(tasks)
+        +score_task(task)
+        +explain_decision(task)
+    }
+
+    class PawPalSystem {
+        +owner: OwnerProfile
+        +pets: List[PetProfile]
+        +scheduler: Scheduler
+        +tasks: List[CareTask]
+        +add_task(task)
+        +get_tasks_for_pet(pet_name)
+        +filter_tasks(status: str|None, pet_name: str|None)
+        +get_tasks_by_status(status)
+        +get_tasks_for_window(window)
+        +reset_for_new_day()
+        +generate_daily_plan(pet_name, weekday)
+    }
+
+    PawPalSystem --> OwnerProfile : stores
+    PawPalSystem --> PetProfile : manages
+    PawPalSystem --> CareTask : contains
+    PawPalSystem --> Scheduler : uses
+    Scheduler --> CareTask : prioritizes
+    Scheduler --> PetProfile : generates plan for
+    PetProfile --> CareTask : informs care needs

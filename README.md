@@ -44,14 +44,34 @@ pip install -r requirements.txt
 
 ## 🖥️ Sample Output
 
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
+This example shows the scheduling logic producing a daily plan for each pet while respecting the owner's time budget and task priorities.
 
-```
-# e.g.:
-# Daily plan for Biscuit (Golden Retriever):
-#   08:00 — Morning walk (30 min) [priority: high]
-#   09:00 — Feeding (10 min) [priority: high]
-#   ...
+```text
+======================================================
+   TODAY'S SCHEDULE  -  Sat  |  Owner: Jordan
+======================================================
+
+  Mochi's Schedule
+  ------------------------------------------------
+  08:00  [morning   ]  (daily)     walk                 30 min  (p4)
+         > Selected walk for Mochi (priority 4, duration 30m, fixed time window, recurs daily, type weight 3).
+  08:30  [morning   ]  (daily)     feeding              10 min  (p5)
+         > Selected feeding for Mochi (priority 5, duration 10m, fixed time window, recurs daily, type weight 2).
+  14:00  [afternoon ]  (daily)     grooming             10 min  (p2)
+         > Selected grooming for Mochi (priority 2, duration 10m, fixed time window, recurs daily, type weight 0).
+
+  Total: 50 min / 120 min
+
+  Luna's Schedule
+  ------------------------------------------------
+  08:00  [morning   ]  (daily)     medication            5 min  (p5)
+         > Selected medication for Luna (priority 5, duration 5m, fixed time window, recurs daily, type weight 10).
+  08:30  [morning   ]  (daily)     feeding              10 min  (p5)
+         > Selected feeding for Luna (priority 5, duration 10m, fixed time window, recurs daily, type weight 2).
+  19:30  [anytime   ]  (daily)     litter               10 min  (p3)
+         > Selected litter for Luna (priority 3, duration 10m, flexible timing, recurs daily, type weight 0).
+
+  Total: 25 min / 120 min
 ```
 
 ## 🧪 Testing PawPal+
@@ -66,29 +86,29 @@ pytest --cov
 
 Sample test output:
 
-```
-# Paste your pytest output here
+```text
+$ pytest -q
+....
+
+4 passed in 0.18s
 ```
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | `Scheduler.sort_by_time()`, `Scheduler.sort_by_priority_then_time()` | Orders tasks by time-of-day and by highest priority first when building a plan |
+| Filtering | `PawPalSystem.filter_tasks()`, `get_tasks_for_pet()`, `get_tasks_for_window()` | Selects tasks by pet, status, or due window |
+| Conflict handling | `Scheduler.detect_time_conflicts()`, `Scheduler.resolve_conflicts()` | Warns when overlapping times occur and keeps the highest-priority duplicate for the same pet/task type |
+| Recurring tasks | `CareTask.is_due_today()`, `PawPalSystem.reset_for_new_day()` | Supports daily and weekly routines while resetting completed daily tasks for the next day |
+| Explanations | `Scheduler.explain_decision()`, `get_last_explanations()` | Generates human-readable reasoning for why each task was chosen |
 
 ## 📸 Demo Walkthrough
 
-Describe your app in numbered steps so a reader can follow along without watching a video:
+1. Open the app and enter the owner name, daily time budget, and preferred time windows such as morning or afternoon.
+2. Add a pet profile with a name and species, then create care tasks like walks, feeding, medication, or grooming with a duration and priority.
+3. Review the task list; each item includes the due window, scheduled start time, and a priority badge.
+4. Click Generate Schedule to let the scheduler rank tasks using priority, time preferences, and the owner’s daily limit.
+5. Inspect any conflict warnings and the explanation text under each selected task to understand why the plan was built that way.
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+**Screenshot or video** *(optional)*: A screenshot can be taken from the Streamlit UI after generating a sample schedule for Mochi and Luna.
